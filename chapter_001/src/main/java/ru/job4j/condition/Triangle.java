@@ -1,15 +1,20 @@
 package ru.job4j.condition;
 
 public class Triangle {
-    private final Point a;
-    private final Point b;
-    private final Point c;
+    private Point a;
+    private Point b;
+    private Point c;
 
     public Triangle(Point a, Point b, Point c) {
         this.a = a;
         this.b = b;
         this.c = c;
     }
+
+    public Triangle() {
+
+    }
+
 
     /**
      * Метод вычисления полупериметра по длинам сторон.
@@ -53,8 +58,8 @@ public class Triangle {
      * @param bc Длина от точки b c.
      * @return Результат проверки.
      */
-    private boolean exist(double ab, double ac, double bc) {
-        return Double.compare(ab, ac + bc) != 0 && Double.compare(ab, Math.abs(ac - bc)) != 0;
+    public boolean exist(double ab, double ac, double bc) {
+        return ab < ac + bc && ac < ab + bc && bc < ab + ac;
     }
 
 }
