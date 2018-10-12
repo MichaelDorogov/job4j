@@ -4,9 +4,9 @@ import ru.job4j.puzzle.firuges.Cell;
 import ru.job4j.puzzle.firuges.Figure;
 
 /**
- * //TODO add comments.
+ * Класс реализующий логику игры.
  *
- * @author Petr Arsentev (parsentev@yandex.ru)
+ * @author Michael Dorogov (mailto:mimeddo@yandex.ru)
  * @version $Id$
  * @since 0.1
  */
