@@ -15,7 +15,6 @@ public class Triangle {
 
     }
 
-
     /**
      * Метод вычисления полупериметра по длинам сторон.
      * <p>
@@ -61,5 +60,4 @@ public class Triangle {
     public boolean exist(double ab, double ac, double bc) {
         return ab < ac + bc && ac < ab + bc && bc < ab + ac;
     }
-
 }
