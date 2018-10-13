@@ -24,48 +24,50 @@ public class Puzzle extends Application {
     private static final String JOB4J = "Пазлы на www.job4j.ru";
     private final int size = 5;
     private final Logic logic = new Logic(size);
+    private static final int RECTANGLE_SIZE = 40;
+    private static final int FIGURE_SIZE = 30;
 
-    private Rectangle buildRectangle(int x, int y, int size) {
+    private Rectangle buildRectangle(int x, int y) {
         Rectangle rect = new Rectangle();
-        rect.setX(x * size);
-        rect.setY(y * size);
-        rect.setHeight(size);
-        rect.setWidth(size);
+        rect.setX(x * RECTANGLE_SIZE);
+        rect.setY(y * RECTANGLE_SIZE);
+        rect.setHeight(RECTANGLE_SIZE);
+        rect.setWidth(RECTANGLE_SIZE);
         rect.setFill(Color.WHITE);
         rect.setStroke(Color.BLACK);
         return rect;
     }
 
-    private Rectangle buildFigure(int x, int y, int size, String image) {
+    private Rectangle buildFigure(int x, int y, String image) {
         Rectangle rect = new Rectangle();
         rect.setX(x);
         rect.setY(y);
-        rect.setHeight(size);
-        rect.setWidth(size);
+        rect.setHeight(FIGURE_SIZE);
+        rect.setWidth(FIGURE_SIZE);
         Image img = new Image(this.getClass().getClassLoader().getResource(image).toString());
         rect.setFill(new ImagePattern(img));
-        final Rectangle momento = new Rectangle(x, y);
+        final Rectangle memento = new Rectangle(x, y);
         rect.setOnDragDetected(
                 event -> {
-                    momento.setX(event.getX());
-                    momento.setY(event.getY());
+                    memento.setX(event.getX());
+                    memento.setY(event.getY());
                 }
         );
         rect.setOnMouseDragged(
                 event -> {
-                    rect.setX(event.getX() - size / 2);
-                    rect.setY(event.getY() - size / 2);
+                    rect.setX(event.getX() - (double) (FIGURE_SIZE / 2));
+                    rect.setY(event.getY() - (double) (FIGURE_SIZE / 2));
                 }
         );
         rect.setOnMouseReleased(
                 event -> {
-                    if (logic.move(this.extract(momento.getX(), momento.getY()), this.extract(event.getX(), event.getY()))) {
-                        rect.setX(((int) event.getX() / 40) * 40 + 5);
-                        rect.setY(((int) event.getY() / 40) * 40 + 5);
+                    if (logic.move(this.extract(memento.getX(), memento.getY()), this.extract(event.getX(), event.getY()))) {
+                        rect.setX((double) ((int) event.getX() / 40) * 40 + 5);
+                        rect.setY((double) ((int) event.getY() / 40) * 40 + 5);
                         checkWinner();
                     } else {
-                        rect.setX(((int) momento.getX() / 40) * 40 + 5);
-                        rect.setY(((int) momento.getY() / 40) * 40 + 5);
+                        rect.setX((double) ((int) memento.getX() / 40) * 40 + 5);
+                        rect.setY((double) ((int) memento.getY() / 40) * 40 + 5);
                     }
                 }
         );
@@ -87,7 +89,7 @@ public class Puzzle extends Application {
         for (int y = 0; y != this.size; y++) {
             for (int x = 0; x != this.size; x++) {
                 panel.getChildren().add(
-                        this.buildRectangle(x, y, 40)
+                        this.buildRectangle(x, y)
                 );
             }
         }
@@ -146,7 +148,6 @@ public class Puzzle extends Application {
                 this.buildFigure(
                         position.x * 40 + 5,
                         position.y * 40 + 5,
-                        30,
                         figure.icon()
                 )
         );
