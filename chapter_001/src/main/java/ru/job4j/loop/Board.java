@@ -13,7 +13,6 @@ public class Board {
                     screen.append(" ");
                 }
             }
-            // добавляем перевод на новую строку.
             screen.append(ln);
         }
         return screen.toString();

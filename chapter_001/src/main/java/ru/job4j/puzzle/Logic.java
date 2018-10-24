@@ -25,16 +25,16 @@ public class Logic {
     }
 
     public boolean move(Cell source, Cell dest) {
-        boolean rst = false;
+        boolean result = false;
         int index = this.findBy(source);
         if (index != -1) {
             Cell[] steps = this.figures[index].way(source, dest);
             if (this.isFree(steps)) {
-                rst = true;
+                result = true;
                 this.figures[index] = this.figures[index].copy(dest);
             }
         }
-        return rst;
+        return result;
     }
 
     public boolean isFree(Cell... cells) {
@@ -56,14 +56,14 @@ public class Logic {
     }
 
     private int findBy(Cell cell) {
-        int rst = -1;
+        int result = -1;
         for (int index = 0; index != this.figures.length; index++) {
             if (this.figures[index] != null && this.figures[index].position().equals(cell)) {
-                rst = index;
+                result = index;
                 break;
             }
         }
-        return rst;
+        return result;
     }
 
     public boolean isWin() {

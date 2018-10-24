@@ -1,6 +1,7 @@
 package ru.job4j.puzzle;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -18,6 +19,7 @@ import ru.job4j.puzzle.firuges.Cell;
 import ru.job4j.puzzle.firuges.Checker;
 import ru.job4j.puzzle.firuges.Figure;
 
+import java.net.URL;
 import java.util.Random;
 
 public class Puzzle extends Application {
@@ -44,7 +46,17 @@ public class Puzzle extends Application {
         rect.setY(y);
         rect.setHeight(FIGURE_SIZE);
         rect.setWidth(FIGURE_SIZE);
-        Image img = new Image(this.getClass().getClassLoader().getResource(image).toString());
+        URL resource = this.getClass().getClassLoader().getResource(image);
+        if (resource == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(JOB4J);
+            alert.setHeaderText(null);
+            alert.setContentText("Обнаружена ошибка в ходе выполнения программы!");
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(-1);
+        }
+        Image img = new Image(resource.toString());
         rect.setFill(new ImagePattern(img));
         final Rectangle memento = new Rectangle(x, y);
         rect.setOnDragDetected(
